@@ -47,6 +47,7 @@
 									</p>
 
 									<input type="submit" name="login" value="Entrar" class="button is-primary"></input>
+									<a href="./php/registrar.php" class="button is-warning">Registrar</a>
 								</form>
 							</div>
 						</div>
