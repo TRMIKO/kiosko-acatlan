@@ -1,4 +1,27 @@
-<!DOCTYPE html>
+<?php
+include_once 'config.inc.php';
+session_start();
+if(isset($_SESSION["usuario"])){
+	//header("Location:../index.php");
+}
+echo "hola".$_SESSION["usuario"];
+if(isset($_POST['agregar'])){
+
+	$nombre = $_FILES['archivo']['name'];
+	$tipo = $_FILES['archivo']['type'];
+	$tamano = $_FILES['archivo']['size'];
+	$ruta = $_FILES['archivo']['tmp_name'];
+	$destino =$_SESSION["directorio"]."/".$nombre;
+
+	if($nombre!=""){
+		if(copy($ruta,$destino)){
+		
+		}
+	}
+}
+?>
+
+
 <html lang="en">
 <head>
 	<title>Kiosko Acatlan</title>
@@ -38,19 +61,26 @@
 								<h2 class="title">DOCUMENTOS</h2>
 							</div>
 						</div>
-
 						<div class="columns">
+							<div class="column">
+								<form  action="<?php $_SERVER['PHP_SELF']; ?>" method="post"  enctype="multipart/form-data">
+									<div class="control is-horizontal">
 
-							<div class="column">
-									<input class="input" type="text" placeholder="Nombre">
+										<div class="control is-grouped">
+											<p class="control is-expanded">
+												<input class="input" type="text" placeholder="Name">
+											</p>
+											<p class="control is-expanded">
+												<input class="input" type="file" name="archivo" >
+											</p>
+											<input type="submit" class="button is-primary" name="agregar" value="Agregar">
+										</div>
+									</div>
+								</form>
 							</div>
-							<div class="column">
-								<input type="file">
-							</div>
-							<div class="column">
-								<a class="button is-primary" id="agregar">Agregar</a>
-							</div>
+
 						</div>
+
 						<div class="columns">
 							<div class="column">
 								<table class="table">
@@ -87,7 +117,7 @@
 						</div>
 						<div class="columns">
 							<div class="column">
-								<a href="#" class="button is-danger">Salir</a>
+								<a href="./logout.php" class="button is-danger">Salir</a>
 							</div>
 						</div>
 

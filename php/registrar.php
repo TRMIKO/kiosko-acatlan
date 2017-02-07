@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once 'config.inc.php';
 	if(!empty($_POST)){
 		$user = $_POST['user'];
@@ -6,11 +6,13 @@ include_once 'config.inc.php';
 		$email = $_POST['email'];
 		if ($user!="") {
 			$db = new Conect_MySql();
-			$sql="INSERT INTO USUARIO VALUES(NULL,'$user','$pass','$email')";
+			$directorio="../usuarios/".$user;
+			$sql="INSERT INTO USUARIO VALUES(NULL,'$user','$pass',0,'$directorio','$email')";
+			mkdir($directorio,0777);
 			$query=$db->execute($sql);
 			header("Location:../index.php");
 		}
-		
+
 	}
 
  ?>
@@ -60,18 +62,18 @@ include_once 'config.inc.php';
 									<label for="" class="label">Contraseña</label>
 									<p class="control has-icon">
 										<input type="text" class="input" name="pass" placeholder="Contraseña" maxlength="15">
-									
-    
+
+
 									</p>
 									<label for="" class="label">Correo</label>
 									<p class="control has-icon">
 										<input type="email" class="input" name="email" placeholder="Email" maxlength="30">
-										
+
 									</p>
 
 									<input type="submit" name="login" value="Registrar" class="button is-primary"></input>
 									<a href="../index.php" class="button is-danger">Cancelar</a>
-									
+
 								</form>
 
 							</div>

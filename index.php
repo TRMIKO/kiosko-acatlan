@@ -1,5 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include_once './php/config.inc.php';
+	session_start();
+	if(isset($_SESSION['usuario'])){
+			header("location:./php/control.php");
+	}
+	if (!empty($_POST)) {
+		$db=new Conect_Mysql();
+		$user=$_POST['user'];
+		$pass=$_POST['pass'];
+		$error='';
+		$sql="SELECT USER,DIRECTORIO FROM USUARIO WHERE USER='$user' AND PASS='$pass'";
+		$query=$db->execute($sql);
+		$rows=$query->num_rows;
+		if($rows>0){
+			$row=$query->fetch_assoc();
+
+			$_SESSION['usuario']=$row['USER'];
+			$_SESSION['directorio']=$row['DIRECTORIO'];
+
+			header("location:./php/control.php");
+		}
+	}
+ ?>
 <head>
 	<title>Kiosko Acatlan</title>
 	<link rel="stylesheet" type="text/css" href="css/bulma.css">
@@ -36,14 +58,14 @@
 						</div>
 						<div class="columns">
 							<div class="column">
-								<form action="" method="post" enctype="multipart/form-data">
+								<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
 									<label for="" class="label">Usuario</label>
 									<p class="control">
 										<input type="text" class="input" name="user" placeholder="Usuario">
 									</p>
 									<label for="" class="label">Contraseña</label>
 									<p class="control">
-										<input type="text" class="input" name="pass" placeholder="Contraseña">
+										<input type="password" class="input" name="pass" placeholder="Contraseña">
 									</p>
 
 									<input type="submit" name="login" value="Entrar" class="button is-primary"></input>
